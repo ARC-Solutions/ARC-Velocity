@@ -1,0 +1,351 @@
+:root {
+  --primary-color: #38B09D;
+  --secondary-color: #222;
+  --red-color: #B22222;
+  --light-color: #fff;
+  --additional-color: #617D98;
+
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow: hidden;
+}
+
+@font-face {
+  font-family: 'Formula1-Black';
+  src: url("./FONTS/Formula1-Black.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'Formula1-Regular';
+  src: url("./FONTS/Formula1-Regular.ttf") format("truetype");
+}
+
+*,
+::before,
+::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#landing-page {
+  background-color: rgb(0, 0, 0);
+  height: 100vh;
+  color: #fff;
+  z-index: 1;
+  position: relative;
+}
+
+#landing-page::before {
+  content: '';
+  background-image: url("./pictures/backGroundLandingPage_FIN.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.9;
+}
+
+#logo {
+  width: 50px;
+  opacity: 0.6;
+}
+
+#nav-bar {
+  padding: 2rem .5rem 0rem .5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#section-page {
+  height: 100%;
+  display: flex;
+  gap: 5rem;
+}
+
+#section-page aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 40px;
+  margin: 0 0 0 .5rem;
+  justify-content: center;
+  align-items: center;
+
+}
+
+aside #lineOne {
+  background-color: #ddd;
+  height: 130px;
+  width: 3px;
+}
+
+aside .icons {
+  display: flex;
+  flex-direction: column;
+  margin: .75rem 0;
+  gap: 1rem;
+}
+
+.icon {
+  width: 30px;
+  height: 32px;
+  color: #fff !important;
+  position: relative;
+}
+
+
+aside #lineTwo {
+  background-color: #ddd;
+  height: 130px;
+  width: 3px;
+}
+
+#section-page #text-content {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  gap: .2rem;
+}
+
+#section-page #text-content h1 {
+  font-family: "Formula1-Black";
+  font-size: 3.2rem;
+}
+
+#section-page #text-content p {
+  font-size: .9rem;
+  letter-spacing: 2px;
+  font-family: "Formula1-Regular";
+}
+
+.icons > *{
+  transition: 0.3s linear;
+  cursor: pointer;
+}
+
+.icons > *:hover {
+  color: var(--primary-color);
+  transform: scale(1.2);
+}
+
+.racing {
+  background-color: #fff;
+  letter-spacing: 4px;
+  padding: 1rem;
+  text-decoration: none;
+  color: #333;
+  font-size: 1.2rem;
+  width: max-content;
+  transition: .25s linear;
+  /* border-radius: 10px; */
+}
+
+.racing:hover {
+  background-color: var(--red-color);
+  color: #fff;
+}
+
+/* project page */
+#project-page {
+  height: 100vh;
+  position: relative;
+  display: flex;
+}
+
+
+#project-page #info-section {
+  padding: 1rem .5rem;
+  height: 100%;
+  width: 50vw;
+  background-color: var(--light-color);
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+#project-page #info-section .lap-time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#project-page #info-section .lap-time h1 {
+  font-size: 4.5rem;
+}
+
+#project-page #info-section .lap-time h2 {
+  font-size: 3.5rem;
+  color: var(--red-color);
+}
+
+#project-page #info-section .challangeTime {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#project-page #info-section .challangeTime h4 {
+  font-size: 2rem;
+}
+
+#project-page #info-section .challangeTime #time {
+  color: var(--red-color);
+}
+
+.animate {
+  animation: loopAnimate .65s linear infinite;
+  color: var(--light-color) !important;
+
+}
+
+.animateX {
+  animation: loopAnimateX .65s linear infinite;
+  color: var(--light-color) !important;
+}
+
+@keyframes loopAnimate {
+  0% {
+    transform: translateY(20%);
+  }
+
+  100% {
+    transform: translateY(-10%);
+  }
+}
+
+@keyframes loopAnimateX {
+  0% {
+    transform: translateX(20%);
+  }
+
+  100% {
+    transform: translateX(-10%);
+  }
+}
+
+#project-page #info-section .controller {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+#project-page #info-section .controller .bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 90px;
+  height: 90px;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 1rem;
+  border-radius: 20px;
+}
+
+#project-page #info-section .controller .bg .controlls {
+  font-size: 3.5rem;
+}
+
+#project-page #info-section .controller .bg:nth-child(1) {
+  grid-row: 1;
+  grid-column: 2;
+}
+
+#project-page #info-section .controller .bg:nth-child(2) {
+  grid-row: 2;
+  grid-column: 3;
+}
+
+#project-page #info-section .controller .bg:nth-child(3) {
+  grid-row: 3;
+  grid-column: 2;
+}
+
+#project-page #info-section .controller .bg:nth-child(4) {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.space {
+  font-weight: bolder !important;
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.space:hover {
+  background-color: transparent !important;
+  color: #333 !important;
+}
+
+#project-page #action-section {
+  height: 100%;
+  width: 50vw;
+  background-color: var(--primary-color);
+}
+
+#project-page #action-section .video {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+#project-page #action-section .video #liveVideo {
+  position: relative;
+  height: 600px;
+  width: 400px;
+  border-radius: 20px;
+  border: 3px solid #fff;
+  overflow: hidden;
+  z-index: 2;
+  resize: none;
+}
+
+#project-page #action-section .video .home {
+  background-color: #fff;
+  letter-spacing: 4px;
+  padding: 1rem;
+  text-decoration: none;
+  color: #333;
+  font-size: 1.2rem;
+  width: max-content;
+  transition: .25s linear;
+  font-weight: bolder;
+}
+
+#project-page #action-section .video .home:hover {
+  background-color: transparent;
+  color: #fff;
+  border: 1px #fff solid;
+}
