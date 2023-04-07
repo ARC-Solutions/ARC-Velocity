@@ -1,86 +1,72 @@
-import {FaLongArrowAltDown, FaLongArrowAltLeft, FaLongArrowAltRight, FaLongArrowAltUp} from 'react-icons/fa';
-import React, { useState, useEffect } from 'react'
-export const ArrowKeys = React.memo(({value}) => {
-    const keyDirections = {
-    up: 'forward',
-    down: 'backward',
-    left: 'left',
-    right: 'right'
-}
-    const wasdDirection = ['w','a','s','d'];
-    const [keyDown, setKeyDown] = useState({
-    up:false,
-    down:false,
+import { FaLongArrowAltDown, FaLongArrowAltLeft, FaLongArrowAltRight, FaLongArrowAltUp } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+
+export const ArrowKeys = React.memo(({ value }) => {
+  const [keyDown, setKeyDown] = useState({
+    up: false,
+    down: false,
     left: false,
     right: false,
-});
-     const switchOn = (direction)=>{
-    fetch(`http://localhost:5000/${direction}`)
-    .then(res => res.text())
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
-    }
-    const switchOff = (direction)=>{
-    fetch(`http://localhost:5000/${direction}-off`)
-        .then(res => res.text())
-        .then(res => console.log(res))
-        .catch(error => console.log(error));
-    }
+  });
 
-    const handleKeyDown = (e)=>{
-        
-        wasdDirection.map(key =>{
-            let translateKey;
-            if(e.key === key){
-                translateKey = key === 'w'? 'up': key === 'a' ? 'left': key === 's' ? 'down': key === 'd' ? 'right':'';
-                // switchOn(keyDirections[translateKey]);
-                setKeyDown({...keyDown, [translateKey]: true}); 
-            }
-        });
+  const handleKeyPress = (e, isKeyDown) => {
+    const directionKeyMap = {
+      w: "up",
+      a: "left",
+      s: "down",
+      d: "right",
     };
 
-    const handleKeyUp =(e)=>{
-         wasdDirection.map(key =>{
-            let translateKey;
-            if(e.key === key){
-                translateKey = key === 'w'? 'up': key === 'a' ? 'left': key === 's' ? 'down': key === 'd' ? 'right':'';
-                // switchOff(keyDirections[translateKey]);
-                setKeyDown({...keyDown, [translateKey]: false});
-            }
-        });
-    };
+    if (e.key in directionKeyMap) {
+      const direction = directionKeyMap[e.key];
+      setKeyDown({ ...keyDown, [direction]: isKeyDown });
 
-    useEffect(()=>{
-        document.addEventListener('keydown', handleKeyDown);
-        document.addEventListener('keyup', handleKeyUp);
-        return ()=>{
-           document.removeEventListener('keydown', handleKeyDown); 
-           document.removeEventListener('keyup', handleKeyUp); 
-        }
-    },[handleKeyDown, handleKeyUp]);
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      };
+
+      console.log(`Sending request to http://localhost:5000/${direction}`);
+      fetch(`http://localhost:5000/${direction}`, requestOptions)
+        .then((response) => {
+          if (response.ok) {
+            console.log(`Success: ${direction}`);
+          } else {
+            console.log(`Error: ${direction}`);
+          }
+        })
+        .catch((error) => {
+          console.error(`Error: ${error}`);
+        });
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => handleKeyPress(e, true);
+    const handleKeyUp = (e) => handleKeyPress(e, false);
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
+  console.log(`ArrowKeys component rendered with value: ${value}`);
 
   return (
-        <div 
-        className="bg"
-        >
-            {
-                value === 'forward' ? 
-        (
-        <FaLongArrowAltUp 
-        className={`controlls ${value} ${keyDown.up && "animate"}`}></FaLongArrowAltUp> 
-        ):
-        value === 'right' ? (
-            <FaLongArrowAltRight 
-            className={`controlls ${value} ${keyDown.right && "animateX"}`}></FaLongArrowAltRight> 
-        ): 
-        value === 'left' ? (
-            <FaLongArrowAltLeft 
-            className={`controlls ${value} ${keyDown.left && "animateX"}`}></FaLongArrowAltLeft> 
-        ):
-        <FaLongArrowAltDown 
-        className={`controlls ${value} ${keyDown.down && "animate"}`}></FaLongArrowAltDown> 
-            }
-        </div>
-        
-  )
+    <div className="bg">
+      {value === "forward" ? (
+        <FaLongArrowAltUp className={`controlls ${value} ${keyDown.up && "animate"}`} />
+      ) : value === "right" ? (
+        <FaLongArrowAltRight className={`controlls ${value} ${keyDown.right && "animateX"}`} />
+      ) : value === "left" ? (
+        <FaLongArrowAltLeft className={`controlls ${value} ${keyDown.left && "animateX"}`} />
+      ) : (
+        <FaLongArrowAltDown className={`controlls ${value} ${keyDown.down && "animate"}`} />
+      )}
+    </div>
+  );
 });
