@@ -14,18 +14,19 @@ export const ArrowKeys = React.memo(({value}) => {
     left: false,
     right: false,
 });
-     const switchOn = (direction)=>{
-    fetch(`http://localhost:5000/${direction}`)
-    .then(res => res.text())
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
-    }
-    const switchOff = (direction)=>{
-    fetch(`http://localhost:5000/${direction}-off`)
-        .then(res => res.text())
-        .then(res => console.log(res))
-        .catch(error => console.log(error));
-    }
+     const switchOn = (direction) => {
+    fetch(`http://localhost:5000/${direction}`, { method: "POST" })
+        .then((res) => res.text())
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+};
+
+const switchOff = (direction) => {
+    fetch(`http://localhost:5000/${direction}-off`, { method: "POST" })
+        .then((res) => res.text())
+        .then((res) => console.log(res))
+        .catch((error) => console.log(error));
+};
 
     const handleKeyDown = (e)=>{
         
@@ -33,7 +34,7 @@ export const ArrowKeys = React.memo(({value}) => {
             let translateKey;
             if(e.key === key){
                 translateKey = key === 'w'? 'up': key === 'a' ? 'left': key === 's' ? 'down': key === 'd' ? 'right':'';
-                // switchOn(keyDirections[translateKey]);
+                switchOn(keyDirections[translateKey]);
                 setKeyDown({...keyDown, [translateKey]: true}); 
             }
         });
@@ -44,7 +45,7 @@ export const ArrowKeys = React.memo(({value}) => {
             let translateKey;
             if(e.key === key){
                 translateKey = key === 'w'? 'up': key === 'a' ? 'left': key === 's' ? 'down': key === 'd' ? 'right':'';
-                // switchOff(keyDirections[translateKey]);
+                switchOff(keyDirections[translateKey]);
                 setKeyDown({...keyDown, [translateKey]: false});
             }
         });
