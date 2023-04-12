@@ -52,7 +52,12 @@ export const Content = () => {
                                 .then((res) => console.log(res))
                                 .catch((err) => console.log(err));
                             }}>GO RACING</Link>
-                            <Link to="/autoPage" className="racing auto">GO AUTONOMOUS</Link>
+                            <Link to="/autoPage" className="racing auto" onClick={()=>{
+                                fetch(`http://localhost:5000/ai`, { method: "POST" })
+                                .then((res) => res.text())
+                                .then((res) => console.log(res))
+                                .catch((err) => console.log(err));
+                            }}>GO AUTONOMOUS</Link>
                         {/* <a href="#project-page" className="racing man">GO RACING</a>
                         <a href="#project-page" className="racing auto">GO AUTONOMOUS</a> */}
                         </div>
