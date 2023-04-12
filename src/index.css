@@ -211,6 +211,8 @@ aside .icons {
   position: relative;
   top: 40px;
   left: 100px;
+  text-decoration: none;
+  color: #fff;
  transform: scale(1.6);
 }
 aside #lineTwo {

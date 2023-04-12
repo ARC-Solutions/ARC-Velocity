@@ -47,7 +47,7 @@ function App() {
       }/>
       <Route path="/landing-Page" element={
         <main id="landing-page">
-               <GiExitDoor className='exit'/>
+           <Link to="/"><GiExitDoor className='exit'/></Link>
     <div className="container content">
       <Content/>
     </div>
