@@ -11,6 +11,7 @@ import {Info} from "./Info"
 import {Action} from "./Action"
 import video from "./videos/Hopium.mp4"
 import logo from "./pictures/logo.png"
+import * as LottiePlayer from "@lottiefiles/lottie-player";
 export const AppContext = createContext();
 function App() {
   return (
@@ -41,7 +42,6 @@ function App() {
           <div id="line"></div>
         </div>
       </div>
-
         </div>
     </>
         

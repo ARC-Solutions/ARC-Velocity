@@ -67,8 +67,8 @@ body {
     padding-top: 2rem;
 }
 #logo {
-  width: 60px;
-  transform: scaleX(1.4);
+  width: 90px;
+  /* transform: scaleX(1.4); */
 }
 .textContent{
   position: fixed;
@@ -77,10 +77,10 @@ body {
   flex-direction: column;
   /* justify-content: flex-end; */
   gap: 5rem;
-  padding: 0 0 4rem 0;
+  padding: 0 0 7rem 0;
   /* margin-right: 12rem; */
   color: #fff;
-  width: 70%;
+  width: 50%;
   height: 100%;
 }
 .textContent h1{

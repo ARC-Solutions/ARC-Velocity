@@ -46,7 +46,12 @@ export const Content = () => {
                         for adrenaline by sharing our love to everyone who is
                         curious about our journey.</p>
                         <div className="buttons">
-                            <Link to="/manPage" className="racing man">GO RACING</Link>
+                            <Link to="/manPage" className="racing man" onClick={()=>{
+                                fetch(`http://localhost:5000/${direction}`, { method: "POST" })
+                                .then((res) => res.text())
+                                .then((res) => console.log(res))
+                                .catch((err) => console.log(err));
+                            }}>GO RACING</Link>
                             <Link to="/autoPage" className="racing auto">GO AUTONOMOUS</Link>
                         {/* <a href="#project-page" className="racing man">GO RACING</a>
                         <a href="#project-page" className="racing auto">GO AUTONOMOUS</a> */}
