@@ -20,7 +20,9 @@ export const Content = () => {
     }
   return (
     <>
+
     <nav id="nav-bar" ref={navBar}>
+   
     <img src="./pictures/mercedes.png" id="logo" alt=""></img>
     </nav>
     <header id="section-page">
@@ -33,6 +35,7 @@ export const Content = () => {
                 <SiCplusplus className='icon'/>
                 <SiBlender className='icon'/>
                 <SiApachecordova className='icon'/>
+               
             </div>
             <div id="lineTwo"></div>
         </aside>

@@ -207,8 +207,12 @@ aside .icons {
   color: #fff !important;
   position: relative;
 }
-
-
+.exit{
+  position: relative;
+  top: 40px;
+  left: 100px;
+ transform: scale(1.6);
+}
 aside #lineTwo {
   background-color: #ddd;
   height: 130px;

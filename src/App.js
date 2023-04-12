@@ -10,6 +10,7 @@ import {Info} from "./Info"
 import {Action} from "./Action"
 import video from "./videos/Hopium.mp4"
 import logo from "./pictures/logo.png"
+import {GiExitDoor} from "react-icons/gi"
 export const AppContext = createContext();
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
       }/>
       <Route path="/landing-Page" element={
         <main id="landing-page">
+               <GiExitDoor className='exit'/>
     <div className="container content">
       <Content/>
     </div>
