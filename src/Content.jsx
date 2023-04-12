@@ -47,7 +47,7 @@ export const Content = () => {
                         curious about our journey.</p>
                         <div className="buttons">
                             <Link to="/manPage" className="racing man" onClick={()=>{
-                                fetch(`http://localhost:5000/${direction}`, { method: "POST" })
+                                fetch(`http://localhost:5000/racing`, { method: "POST" })
                                 .then((res) => res.text())
                                 .then((res) => console.log(res))
                                 .catch((err) => console.log(err));
