@@ -3,7 +3,6 @@ import {BrowserRouter, Link, Route, Routes, useNavigate} from "react-router-dom"
 import {FiPlay} from "react-icons/fi"
 import {TbMinusVertical} from "react-icons/tb"
 import {BsBoxArrowInRight} from "react-icons/bs"
-import {HiMinus} from "react-icons/hi"
 import { Content } from "./Content";
 import {InfoSection} from "./InfoSection"
 import { ActionSection } from "./ActionSection";
@@ -11,7 +10,6 @@ import {Info} from "./Info"
 import {Action} from "./Action"
 import video from "./videos/Hopium.mp4"
 import logo from "./pictures/logo.png"
-import * as LottiePlayer from "@lottiefiles/lottie-player";
 export const AppContext = createContext();
 function App() {
   return (
