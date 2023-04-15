@@ -23,7 +23,7 @@ export const Content = () => {
 
     <nav id="nav-bar" ref={navBar}>
    
-    <img src="./pictures/mercedes.png" id="logo" alt=""></img>
+{/*     <img src="./pictures/mercedes.png" id="logo" alt=""></img> */}
     </nav>
     <header id="section-page">
         <aside>

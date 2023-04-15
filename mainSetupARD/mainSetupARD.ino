@@ -16,8 +16,6 @@ void setup() {
   pinMode(10, OUTPUT);  // left - orange
   pinMode(11, OUTPUT);  // right - yellow
   strip.begin();
-  strip.fill(strip.Color(100, 100, 100));
-  strip.show();
 }
 
 void loop() {
@@ -51,8 +49,12 @@ void loop() {
     if (str.equals("forward_off")) {
       digitalWrite(9, LOW);
     }
+    if(str.equals("home")){
+        strip.fill(strip.Color(100, 100, 100));
+        strip.show();
+    }
     if(str.equals("petronas")){
-      strip.fill(strip.Color(0,89,86)); //PETRONAS GREEN
+      strip.fill(strip.Color(0,63.1,61.2)); //PETRONAS GREEN
       strip.show();
     }
     if(str.equals("ineos")){

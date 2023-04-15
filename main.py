@@ -99,5 +99,11 @@ def ai():
     print('changing color')
     return jsonify({'result': 'ai'})
 
+@app.route('/home', methods=['POST'])
+def home():
+    arduino.write(b'home\n')
+    print('default color')
+    return jsonify({'result': 'homeColor'})
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True)

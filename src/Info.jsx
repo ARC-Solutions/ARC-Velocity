@@ -60,7 +60,12 @@ export const Info = () => {
                     </span>
                 </h2>
             </div>
-            <Link to="/landing-Page" className='home'>HOME</Link>
+            <Link to="/landing-Page" className='home' onClick={()=>{
+                                fetch(`http://localhost:5000/home`, { method: "POST" })
+                                .then((res) => res.text())
+                                .then((res) => console.log(res))
+                                .catch((err) => console.log(err));
+                            }}>HOME</Link>
      </aside>
   )
 }
