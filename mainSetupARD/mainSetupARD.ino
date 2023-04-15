@@ -3,6 +3,8 @@
 #include <Adafruit_NeoPixel.h>
 #define PIN 6
 #define NUM_LEDS 144
+#define DELAYVAL 500
+
 Adafruit_NeoPixel strip(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800);
 int x;
 String str;
@@ -14,8 +16,7 @@ void setup() {
   pinMode(10, OUTPUT);  // left - orange
   pinMode(11, OUTPUT);  // right - yellow
   strip.begin();
-  strip.fill(strip.Color(0,89,86)); //PETRONAS GREEN
-  //strip.fill(strip.Color(255,0,4));
+  strip.fill(strip.Color(100, 100, 100));
   strip.show();
 }
 
@@ -49,6 +50,14 @@ void loop() {
     }
     if (str.equals("forward_off")) {
       digitalWrite(9, LOW);
+    }
+    if(str.equals("petronas")){
+      strip.fill(strip.Color(0,89,86)); //PETRONAS GREEN
+      strip.show();
+    }
+    if(str.equals("ineos")){
+      strip.fill(strip.Color(255,0,4));
+      strip.show();
     }
   }
 }
