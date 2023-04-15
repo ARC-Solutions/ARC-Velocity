@@ -52,7 +52,12 @@ function App() {
       }/>
       <Route path="/landing-Page" element={
         <main id="landing-page">
-           <Link to="/"><GiExitDoor className='exit'/></Link>
+           <Link to="/"><GiExitDoor className='exit' onClick={()=>{
+                                fetch(`http://localhost:5000/video`, { method: "POST" })
+                                .then((res) => res.text())
+                                .then((res) => console.log(res))
+                                .catch((err) => console.log(err));
+                            }}/></Link>
     <div className="container content">
       <Content/>
     </div>

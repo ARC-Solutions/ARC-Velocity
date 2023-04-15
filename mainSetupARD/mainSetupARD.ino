@@ -12,6 +12,7 @@ Adafruit_NeoPixel strip(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800);
 uint32_t color1 = strip.Color(100, 100, 100);
 uint32_t color2 = strip.Color(0, 63, 61); // PETRONAS GREEN
 uint32_t color3 = strip.Color(255, 0, 4);
+uint32_t color4 = strip.Color(0,0,0);
 
 int x;
 String str;
@@ -65,6 +66,10 @@ void loop() {
     if(str.equals("ineos")){
       fadeBetweenColors(strip.getPixelColor(0), color3, 23);
     }
+    if(str.equals("led_off")){
+      fadeBetweenColors(strip.getPixelColor(0), color4, 23);
+      turnOffAllLEDs();
+    }
   }
 }
 
@@ -81,6 +86,10 @@ void fadeBetweenColors(uint32_t startColor, uint32_t endColor, int duration) {
   float greenStep = ((float)endGreen - (float)startGreen) / duration;
   float blueStep = ((float)endBlue - (float)startBlue) / duration;
 
+  redStep = redStep < 0 ? min(redStep, -1.0f) : max(redStep, 1.0f);
+  greenStep = greenStep < 0 ? min(greenStep, -1.0f) : max(greenStep, 1.0f);
+  blueStep = blueStep < 0 ? min(blueStep, -1.0f) : max(blueStep, 1.0f);
+
   for (int i = 0; i < duration; i++) {
     uint8_t currentRed = startRed + (redStep * i);
     uint8_t currentGreen = startGreen + (greenStep * i);
@@ -91,4 +100,14 @@ void fadeBetweenColors(uint32_t startColor, uint32_t endColor, int duration) {
     strip.show();
     delay(10);
   }
+  if(endColor == strip.Color(0,0,0)){
+    turnOffAllLEDs();
+  }
+}
+
+void turnOffAllLEDs() {
+  for (int i = 0; i < strip.numPixels(); i++) {
+    strip.setPixelColor(i, 0, 0, 0);
+  }
+  strip.show();
 }

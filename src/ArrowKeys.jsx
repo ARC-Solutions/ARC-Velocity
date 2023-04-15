@@ -28,35 +28,39 @@ const switchOff = (direction) => {
         .catch((error) => console.log(error));
 };
 
-    const handleKeyDown = (e)=>{
-        
-        wasdDirection.map(key =>{
-            let translateKey;
-            if(e.key === key){
-                translateKey = key === 'w'? 'up': key === 'a' ? 'left': key === 's' ? 'down': key === 'd' ? 'right':'';
+    const handleKeyDown = (e) => {
+    wasdDirection.map(key => {
+        let translateKey;
+        if (e.key === key) {
+            translateKey = key === 'w' ? 'up' : key === 'a' ? 'left' : key === 's' ? 'down' : key === 'd' ? 'right' : '';
+            if (!keyDown[translateKey]) {
                 switchOn(keyDirections[translateKey]);
-                setKeyDown({...keyDown, [translateKey]: true}); 
+                setKeyDown({ ...keyDown, [translateKey]: true });
             }
-        });
-    };
+        }
+    });
+};
 
-    const handleKeyUp =(e)=>{
-         wasdDirection.map(key =>{
-            let translateKey;
-            if(e.key === key){
-                translateKey = key === 'w'? 'up': key === 'a' ? 'left': key === 's' ? 'down': key === 'd' ? 'right':'';
+
+    const handleKeyUp = (e) => {
+    wasdDirection.map(key => {
+        let translateKey;
+        if (e.key === key) {
+            translateKey = key === 'w' ? 'up' : key === 'a' ? 'left' : key === 's' ? 'down' : key === 'd' ? 'right' : '';
+            setTimeout(() => {
                 switchOff(keyDirections[translateKey]);
-                setKeyDown({...keyDown, [translateKey]: false});
-            }
-        });
-    };
+                setKeyDown({ ...keyDown, [translateKey]: false });
+            }, 100); // Add a 100ms delay before sending the "off" signal
+        }
+    });
+};
 
     useEffect(()=>{
         document.addEventListener('keydown', handleKeyDown);
         document.addEventListener('keyup', handleKeyUp);
         return ()=>{
-           document.removeEventListener('keydown', handleKeyDown); 
-           document.removeEventListener('keyup', handleKeyUp); 
+           document.removeEventListener('keydown', handleKeyDown);
+           document.removeEventListener('keyup', handleKeyUp);
         }
     },[handleKeyDown, handleKeyUp]);
 
