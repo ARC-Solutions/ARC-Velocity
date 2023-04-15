@@ -50,54 +50,71 @@ def foward_off():
     except serial.SerialTimeoutException:
         return jsonify({'error': 'Serial Timeout'})
 
+@app.route('/backward', methods=['POST'])
+def backward():
+    try:
+        print('car go backwards')
+        arduino.write(b'backward_on\n')
+        return jsonify({'result': 'backward'})
+    except serial.SerialTimeoutException:
+        return jsonify({'error': 'Serial Timeout'})
+@app.route('/backward-off', methods=['POST'])
+def backward_off():
+    try:
+        print('not backwards')
+        arduino.write(b'backward_off\n')
+        return jsonify({'result': 'backward'})
+    except serial.SerialTimeoutException:
+        return jsonify({'error': 'Serial Timeout'})
+
+
 @app.route('/right', methods=['POST'])
 def right():
     try:
         print('car go right')
-        arduino.write(b'right_on')
+        arduino.write(b'right_on\n')
         return jsonify({'result': 'right'})
     except serial.SerialTimeoutException:
         return jsonify({'error': 'Serial Timeout'})
-
 @app.route('/right-off', methods=['POST'])
 def right_off():
     try:
         print('not right')
-        arduino.write(b'right_off')
+        arduino.write(b'right_off\n')
         return jsonify({'result': 'right-off'})
     except serial.SerialTimeoutException:
         return jsonify({'error': 'Serial Timeout'})
-
 
 @app.route('/left', methods=['POST'])
 def left():
     try:
         print('car go left')
-        arduino.write(b'left_on')
+        arduino.write(b'left_on\n')
+        return jsonify({'result': 'left'})
+    except serial.SerialTimeoutException:
+        return jsonify({'error': 'Serial Timeout'})
+@app.route('/left-off', methods=['POST'])
+def left_off():
+    try:
+        print('not left')
+        arduino.write(b'left_off\n')
         return jsonify({'result': 'left'})
     except serial.SerialTimeoutException:
         return jsonify({'error': 'Serial Timeout'})
 
-@app.route('/backward', methods=['POST'])
-def backward():
-    try:
-        print('car go backwards')
-        arduino.write(b'backwards_on')
-        return jsonify({'result': 'backward'})
-    except serial.SerialTimeoutException:
-        return jsonify({'error': 'Serial Timeout'})
+
 
 @app.route('/racing', methods=['POST'])
 def racing():
     arduino.write(b'petronas\n')
     print('changing color')
-    return jsonify({'result': 'racing'})
+    return jsonify({'result': 'racingColor'})
 
 @app.route('/ai', methods=['POST'])
 def ai():
     arduino.write(b'ineos\n')
     print('changing color')
-    return jsonify({'result': 'ai'})
+    return jsonify({'result': 'aiColor'})
 
 @app.route('/home', methods=['POST'])
 def home():
