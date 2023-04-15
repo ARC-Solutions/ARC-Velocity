@@ -36,7 +36,12 @@ function App() {
           <TbMinusVertical style={{transform: "scale(2)"}}/>
           <Link to={"/landing-Page"} className="navigate-home">
           <BsBoxArrowInRight/>
-            <h6>explore</h6>
+            <h6 onClick={()=>{
+                                fetch(`http://localhost:5000/home`, { method: "POST" })
+                                .then((res) => res.text())
+                                .then((res) => console.log(res))
+                                .catch((err) => console.log(err));
+                            }}>explore</h6>
           </Link>
           <div id="line"></div>
         </div>
