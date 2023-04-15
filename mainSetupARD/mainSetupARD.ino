@@ -1,11 +1,18 @@
 // arduino code
 // read the string from the serial port and turn on/off the associated pin
 #include <Adafruit_NeoPixel.h>
+#include <FastLED.h>
+
 #define PIN 6
 #define NUM_LEDS 144
 #define DELAYVAL 500
 
 Adafruit_NeoPixel strip(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800);
+
+uint32_t color1 = strip.Color(100, 100, 100);
+uint32_t color2 = strip.Color(0, 63, 61); // PETRONAS GREEN
+uint32_t color3 = strip.Color(255, 0, 4);
+
 int x;
 String str;
 
@@ -50,16 +57,38 @@ void loop() {
       digitalWrite(9, LOW);
     }
     if(str.equals("home")){
-        strip.fill(strip.Color(100, 100, 100));
-        strip.show();
+        fadeBetweenColors(strip.getPixelColor(0), color1, 23);
     }
     if(str.equals("petronas")){
-      strip.fill(strip.Color(0,63.1,61.2)); //PETRONAS GREEN
-      strip.show();
+      fadeBetweenColors(strip.getPixelColor(0), color2, 23);
     }
     if(str.equals("ineos")){
-      strip.fill(strip.Color(255,0,4));
-      strip.show();
+      fadeBetweenColors(strip.getPixelColor(0), color3, 23);
     }
+  }
+}
+
+void fadeBetweenColors(uint32_t startColor, uint32_t endColor, int duration) {
+  uint8_t startRed = (startColor >> 16) & 0xFF;
+  uint8_t startGreen = (startColor >> 8) & 0xFF;
+  uint8_t startBlue = startColor & 0xFF;
+
+  uint8_t endRed = (endColor >> 16) & 0xFF;
+  uint8_t endGreen = (endColor >> 8) & 0xFF;
+  uint8_t endBlue = endColor & 0xFF;
+
+  float redStep = ((float)endRed - (float)startRed) / duration;
+  float greenStep = ((float)endGreen - (float)startGreen) / duration;
+  float blueStep = ((float)endBlue - (float)startBlue) / duration;
+
+  for (int i = 0; i < duration; i++) {
+    uint8_t currentRed = startRed + (redStep * i);
+    uint8_t currentGreen = startGreen + (greenStep * i);
+    uint8_t currentBlue = startBlue + (blueStep * i);
+
+    uint32_t currentColor = strip.Color(currentRed, currentGreen, currentBlue);
+    strip.fill(currentColor);
+    strip.show();
+    delay(10);
   }
 }
