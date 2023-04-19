@@ -308,7 +308,7 @@ aside #lineTwo {
   font-weight: bolder;
 }
 .autonomous .lap-time > h2{
-  color:  !important;
+  color: var(--red-color) !important;
   font-family: "Formula1-Regular";
   font-weight: bolder;
 }

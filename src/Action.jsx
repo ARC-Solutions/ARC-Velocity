@@ -8,5 +8,5 @@ export const Action = () => {
                 <img id="liveVideo" src="" alt=""/>
             </div>
     </aside>
-  )
+  ) 
 };
