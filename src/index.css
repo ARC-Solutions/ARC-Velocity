@@ -298,6 +298,26 @@ aside #lineTwo {
   align-items: center;
   justify-content: center;
 }
+.autonomous{
+  background-color: #fff !important;
+  color: #222 !important;
+}
+
+.autonomous .lap-time > h1{
+  font-family: "Mars";
+  font-weight: bolder;
+}
+.autonomous .lap-time > h2{
+  color:  !important;
+  font-family: "Formula1-Regular";
+  font-weight: bolder;
+}
+
+.action-autonomous{
+
+  background-color: #222 !important;
+  color: #fff !important;
+}
 
 #project-page #info-section .lap-time {
   display: flex;
@@ -438,7 +458,7 @@ aside #lineTwo {
   height: 600px;
   width: 400px;
   border-radius: 20px;
-  border: 3px solid #fff;
+  border: 4px solid #fff;
   overflow: hidden;
   z-index: 2;
   resize: none;
@@ -454,10 +474,21 @@ aside #lineTwo {
   width: max-content;
   transition: .25s linear;
   font-weight: bolder;
-}
-
+}#ffec3c
 #project-page #action-section .video .home:hover {
   background-color: transparent;
   color: #fff;
   border: 1px #fff solid;
+}
+#project-page #info-section .home {
+  background-color: #222;
+  letter-spacing: 4px;
+  padding: 1rem;
+  text-decoration: none;
+  /* color: #ffec3c; */
+  color: #CFFE3F;
+  font-size: 1.2rem;
+  width: max-content;
+  transition: .25s linear;
+  font-weight: bolder;
 }

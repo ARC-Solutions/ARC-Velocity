@@ -50,7 +50,7 @@ export const Info = () => {
         }
     },[handlePressSpace]);
   return (
-     <aside id="info-section">
+     <aside id="info-section" className='autonomous'>
         <div className="lap-time">
                 <h1>ARC AI</h1>
                 <h2>
