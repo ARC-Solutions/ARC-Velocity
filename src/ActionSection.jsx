@@ -6,6 +6,7 @@ export const ActionSection = () => {
     <aside id="action-section">
             <div className="video">
                 <img id="liveVideo" src="" alt=""/>
+                
                 <Link to="/landing-Page" className="home" onClick={()=>{
                                 fetch(`http://localhost:5000/home`, { method: "POST" })
                                 .then((res) => res.text())
