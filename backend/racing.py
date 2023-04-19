@@ -1,7 +1,7 @@
 import serial
 from flask import Response, json
+from arduino_Connection import arduino
 
-arduino = serial.Serial('COM3', 9600, timeout=1)
 
 def forward_on():
     try:
