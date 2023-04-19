@@ -1,10 +1,11 @@
-import serial
 import json
 from flask import Flask, Response, send_from_directory
 from flask_cors import CORS
 from concurrent.futures import ThreadPoolExecutor
 import os
-from racing import forward_on, foward_off, backward_on, backward_off, right_on, right_off, left_on, left_off, arduino
+from racing import forward_on, foward_off, backward_on, backward_off, right_on, right_off, left_on, left_off
+from arduino_Connection import arduino
+
 
 REACT_BUILD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../build')
 
@@ -12,6 +13,7 @@ app = Flask(__name__, static_folder='./src', template_folder='./public')
 CORS(app)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
+
 
 executor = ThreadPoolExecutor(max_workers=os.cpu_count())
 
@@ -43,6 +45,8 @@ def home_on():
     arduino.write(b'home\n')
     print('default color')
     return Response(json.dumps({'result': 'White'}), mimetype='application/json')
+
+
 
 @app.route('/forward', methods=['POST'])
 def forward():

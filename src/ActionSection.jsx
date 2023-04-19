@@ -5,7 +5,7 @@ export const ActionSection = () => {
   return (
     <aside id="action-section">
             <div className="video">
-                <img id="liveVideo" src="" alt=""/>
+                <img id="liveVideo" src="http://192.168.43.112:8080/video" alt=""/>
                 <Link to="/landing-Page" className="home" onClick={()=>{
                                 fetch(`http://localhost:5000/home`, { method: "POST" })
                                 .then((res) => res.text())
