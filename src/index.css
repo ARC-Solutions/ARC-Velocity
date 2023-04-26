@@ -466,10 +466,11 @@ aside #lineTwo {
 }
 
 
+
 #project-page #action-section .video #liveVideo {
   position: relative;
-  height: 600px;
-  width: 400px;
+  height: 648px;
+  width: 488px;
   border-radius: 20px;
   border: 4px solid #fff;
   overflow: hidden;

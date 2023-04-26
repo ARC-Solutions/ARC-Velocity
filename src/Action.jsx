@@ -9,7 +9,7 @@ export const Action = () => {
 <span class="dot"></span>
       </div>
             <div className="video">
-                <img id="liveVideo" src="http://192.168.43.219:8080" alt=""/>
+                <img id="liveVideo" src="http://192.168.43.202:8080/video" alt=""/>
             </div>
             <div className="dot-container">
             <span class="dot"></span>
