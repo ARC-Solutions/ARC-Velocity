@@ -2,7 +2,6 @@ import serial
 from flask import Response, json
 from arduino_Connection import arduino
 
-
 def forward_on():
     try:
         print('car go forward')
