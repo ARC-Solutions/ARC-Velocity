@@ -4,7 +4,7 @@
 #include <FastLED.h>
 
 #define PIN 6
-#define NUM_LEDS 144
+#define NUM_LEDS 73
 #define DELAYVAL 500
 
 Adafruit_NeoPixel strip(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800);

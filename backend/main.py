@@ -7,7 +7,6 @@ from racing import forward_on, foward_off, backward_on, backward_off, right_on, 
 from arduino_Connection import arduino
 from ai import start_ai_car
 
-
 REACT_BUILD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../build')
 
 app = Flask(__name__, static_folder='./src', template_folder='./public')
@@ -34,7 +33,7 @@ def racing_on():
     return Response(json.dumps({'result': 'PetronasColor'}), mimetype='application/json')
 @app.route('/ai', methods=['POST'])
 def ai_on():
-    #arduino.write(b'ineos\n')
+    arduino.write(b'ineos\n')
     start_ai_car(arduino)
     print('changing color')
     return Response(json.dumps({'result': 'IneosColor'}), mimetype='application/json')
