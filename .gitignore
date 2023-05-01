@@ -5,6 +5,7 @@
 /left
 /no_tape
 /right
+*.jpg
 
 # dependencies
 /node_modules
