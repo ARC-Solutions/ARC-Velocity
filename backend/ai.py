@@ -33,7 +33,7 @@ def start_ai_car(arduino_serial):
     video_url = "http://192.168.0.164:8080/video"
     cap = cv2.VideoCapture(video_url)
 
-    model_path = r"D:\priv\Programming\ARCV2\PreTrainedModel"
+    model_path = "/mnt/d/priv/Programming/ARCV2/PreTrainedModel"
     model = load_model(model_path)
 
     impulse_duration = 0.05  # Adjust this value to control the duration of the impulses
