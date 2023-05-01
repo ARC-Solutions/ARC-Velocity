@@ -2,6 +2,8 @@
 
 #model
 *.pb
+/PreTrainedModel
+/OldModel
 
 #training_data
 /forward
