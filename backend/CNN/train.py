@@ -6,8 +6,6 @@ from keras.layers import Dense, GlobalAveragePooling2D
 from keras.models import Model
 from keras.optimizers import Adam
 
-
-
 def rename_files(folder, prefix):
     index = 0
     for filename in os.listdir(folder):
