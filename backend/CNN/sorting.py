@@ -1,7 +1,7 @@
 import os
 import cv2
 
-source_folder = r"D:\priv\Programming\ARCV2\Training"
+source_folder = "D:\priv\Programming\ARCV2\Training"
 output_folders = {
     "0": r"D:\priv\Programming\ARCV2\backend\CNN\Forward",
     "1": r"D:\priv\Programming\ARCV2\backend\CNN\Left",

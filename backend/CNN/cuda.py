@@ -2,8 +2,7 @@ import tensorflow as tf
 
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
-
-
+print(tf.__version__)
 
 # Set the GPU memory growth to avoid allocating all GPU memory at once
 gpus = tf.config.experimental.list_physical_devices("GPU")

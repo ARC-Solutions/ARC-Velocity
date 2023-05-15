@@ -30,10 +30,10 @@ def capture_frames(cap, frame_queue, stop_capture):
 
 
 def start_ai_car(arduino_serial):
-    video_url = "http://192.168.0.164:8080/video"
+    video_url = "http://192.168.43.137:8080/video"
     cap = cv2.VideoCapture(video_url)
 
-    model_path = "/mnt/d/priv/Programming/ARCV2/PreTrainedModel"
+    model_path = "D:\priv\Programming\ARCV2\PreTrainedModel"
     model = load_model(model_path)
 
     impulse_duration = 0.05  # Adjust this value to control the duration of the impulses
@@ -79,8 +79,8 @@ def start_ai_car(arduino_serial):
         roi = frame[roi_y:roi_y+roi_height, roi_x:roi_x+roi_width]
 
         # Define a range for the gray color of the tape
-        lower = np.array([0, 0, 40])
-        upper = np.array([220, 80, 220])
+        lower = np.array([0, 0, 0])
+        upper = np.array([130, 130, 130])
 
         # Create a mask to highlight the line
         hsv_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
@@ -98,23 +98,26 @@ def start_ai_car(arduino_serial):
         # Use the model's prediction to decide the direction to move
         prediction = model.predict(preprocessed_roi)
         predicted_label = np.argmax(prediction)
-
+        print(predicted_label)
         action_text = ""
-        if white_pixel_percentage >= white_pixel_threshold:
-            if predicted_label == 0:  # forward
+        # if white_pixel_percentage >= white_pixel_threshold:
+        if predicted_label == 0:  # forward
                 send_command("forward_on", impulse_duration)
+                print("forward_on")
                 action_text = "forward"
-            elif predicted_label == 1:  # left
+        elif predicted_label == 1:  # left
                 send_command("left_on", impulse_duration)
                 action_text = "left"
-            elif predicted_label == 2:  # right
+                print("left_on")
+        elif predicted_label == 2:  # right
                 send_command("right_on", impulse_duration)
                 action_text = "right"
-        else:  # stop or any other action
-            send_command("forward_off")
-            send_command("right_off")
-            send_command("left_off")
-            action_text = "stop"
+                print("right_on")
+        # else:  # stop or any other action
+        #     send_command("forward_off")
+        #     send_command("right_off")
+        #     send_command("left_off")
+        #     action_text = "stop"
 
         # Add action text to the frame
         cv2.putText(frame, fps_text, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2,
