@@ -5,7 +5,7 @@ import requests
 import os
 
 # Set the URL to fetch
-url = "http://192.168.75.202:8080/videomgr.html#/photo"
+url = "http://192.168.43.202:8080/videomgr.html#/photo"
 
 # Set the directory to save the images to
 directory = r"D:\priv\Programming\ARCV2\Training"

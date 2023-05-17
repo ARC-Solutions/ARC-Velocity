@@ -8,8 +8,8 @@ output_folders = {
     "2": r"D:\priv\Programming\ARCV2\backend\CNN\Right",
     "3": r"D:\priv\Programming\ARCV2\backend\CNN\No_Tape",
 }
-preview_max_width = 800
-preview_max_height = 600
+preview_max_width = 1400
+preview_max_height = 1077
 
 def display_image(image):
     rotated_image = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)

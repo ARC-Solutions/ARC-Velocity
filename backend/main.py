@@ -34,7 +34,7 @@ def racing_on():
 @app.route('/ai', methods=['POST'])
 def ai_on():
     arduino.write(b'ineos\n')
-    start_ai_car(arduino)
+    #start_ai_car(arduino)
     print('changing color')
     return Response(json.dumps({'result': 'IneosColor'}), mimetype='application/json')
 @app.route('/video', methods=['POST'])
