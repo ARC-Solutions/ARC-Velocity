@@ -33,3 +33,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+PreTrainedModel/variables/variables.data-00000-of-00001
+PreTrainedModel/variables/variables.index
