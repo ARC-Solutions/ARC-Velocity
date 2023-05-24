@@ -7,6 +7,15 @@ export const ArrowKeys = React.memo(({value}) => {
     left: 'left',
     right: 'right'
 }
+    const debounce = (func, wait) => {
+  let timeout;
+  return function (...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, args), wait);
+  };
+};
+
     const wasdDirection = ['w','a','s','d'];
     const [keyDown, setKeyDown] = useState({
     up:false,
@@ -33,8 +42,9 @@ const switchOff = (direction) => {
         let translateKey;
         if (e.key === key) {
             translateKey = key === 'w' ? 'up' : key === 'a' ? 'left' : key === 's' ? 'down' : key === 'd' ? 'right' : '';
+            const debouncedSwitchOn = debounce(switchOn, 100);
             if (!keyDown[translateKey]) {
-                switchOn(keyDirections[translateKey]);
+                debouncedSwitchOn(keyDirections[translateKey]);
                 setKeyDown({ ...keyDown, [translateKey]: true });
             }
         }
@@ -47,8 +57,9 @@ const switchOff = (direction) => {
         let translateKey;
         if (e.key === key) {
             translateKey = key === 'w' ? 'up' : key === 'a' ? 'left' : key === 's' ? 'down' : key === 'd' ? 'right' : '';
+            const debouncedSwitchOff = debounce(switchOff, 100);
             setTimeout(() => {
-                switchOff(keyDirections[translateKey]);
+                debouncedSwitchOff(keyDirections[translateKey]);
                 setKeyDown({ ...keyDown, [translateKey]: false });
             }, 100); // Add a 100ms delay before sending the "off" signal
         }

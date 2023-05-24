@@ -1,5 +1,17 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+#model
+*.pb
+/PreTrainedModel
+/OldModel
+
+#training_data
+/forward
+/left
+/no_tape
+/right
+*.jpg
+
 # dependencies
 /node_modules
 /.pnp
@@ -21,3 +33,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+PreTrainedModel/variables/variables.data-00000-of-00001
+PreTrainedModel/variables/variables.index
