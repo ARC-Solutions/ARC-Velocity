@@ -3,13 +3,13 @@ import cv2
 
 source_folder = "D:\priv\Programming\ARCV2\Training"
 output_folders = {
-    "0": r"D:\priv\Programming\ARCV2\backend\CNN\Forward",
-    "1": r"D:\priv\Programming\ARCV2\backend\CNN\Left",
-    "2": r"D:\priv\Programming\ARCV2\backend\CNN\Right",
-    "3": r"D:\priv\Programming\ARCV2\backend\CNN\No_Tape",
+    "w": r"D:\priv\Programming\ARCV2\backend\CNN\Forward",
+    "a": r"D:\priv\Programming\ARCV2\backend\CNN\Left",
+    "d": r"D:\priv\Programming\ARCV2\backend\CNN\Right",
+    "s": r"D:\priv\Programming\ARCV2\backend\CNN\No_Tape",
 }
-preview_max_width = 1400
-preview_max_height = 1077
+preview_max_width = 880
+preview_max_height = 660
 
 def display_image(image):
     rotated_image = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
@@ -20,7 +20,7 @@ def display_image(image):
 def wait_for_label():
     while True:
         key = cv2.waitKey(0) & 0xFF
-        if key in [ord('0'), ord('1'), ord('2'), ord('3'), ord('q')]:
+        if key in [ord('w'), ord('a'), ord('d'), ord('s'), ord('q')]:
             return chr(key)
 
 def resize_image(image, max_width, max_height):
@@ -41,7 +41,7 @@ def add_text(image):
     font_scale = 0.7
     font_color = (255, 255, 255)
     font_thickness = 2
-    text = "0: for forward\n1: for left\n2: for right\n3: for no tape\nq: to quit"
+    text = "w: for forward\na: for left\nd: for right\ns: for no tape\nq: to quit"
     y0, dy = 30, 30
     for i, line in enumerate(text.split('\n')):
         y = y0 + i * dy

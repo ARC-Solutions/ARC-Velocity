@@ -30,7 +30,7 @@ def capture_frames(cap, frame_queue, stop_capture):
 
 
 def start_ai_car(arduino_serial):
-    video_url = "http://192.168.43.137:8080/video"
+    video_url = "http://192.168.0.164:8080/video"
     cap = cv2.VideoCapture(video_url)
 
     model_path = "D:\priv\Programming\ARCV2\PreTrainedModel"
@@ -72,15 +72,15 @@ def start_ai_car(arduino_serial):
 
         # Define a region of interest
         height, width, _ = frame.shape
-        roi_height = 100  # Adjust this to change the ROI height
+        roi_height = 100 # Adjust this to change the ROI height
         roi_width = 300  # Adjust this to change the ROI width
-        roi_y = int(height * 0.6)
+        roi_y = int(height * 0.6)+25
         roi_x = int((width - roi_width) / 2)
         roi = frame[roi_y:roi_y+roi_height, roi_x:roi_x+roi_width]
 
         # Define a range for the gray color of the tape
         lower = np.array([0, 0, 0])
-        upper = np.array([130, 130, 130])
+        upper = np.array([160, 160, 140])  # adjust the V value as needed based on your specific lighting conditions
 
         # Create a mask to highlight the line
         hsv_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
@@ -100,29 +100,32 @@ def start_ai_car(arduino_serial):
         predicted_label = np.argmax(prediction)
         print(predicted_label)
         action_text = ""
-        # if white_pixel_percentage >= white_pixel_threshold:
-        if predicted_label == 0:  # forward
+        if white_pixel_percentage < white_pixel_threshold:
+            if predicted_label == 0:  # forward
                 send_command("forward_on", impulse_duration)
                 print("forward_on")
                 action_text = "forward"
-        elif predicted_label == 1:  # left
+            elif predicted_label == 1:  # left
                 send_command("left_on", impulse_duration)
                 action_text = "left"
                 print("left_on")
-        elif predicted_label == 2:  # right
+            elif predicted_label == 2:  # right
                 send_command("right_on", impulse_duration)
                 action_text = "right"
                 print("right_on")
-        # else:  # stop or any other action
-        #     send_command("forward_off")
-        #     send_command("right_off")
-        #     send_command("left_off")
-        #     action_text = "stop"
+            elif predicted_label == 3:
+                action_text = "no_tape"
+                print("no_tape")
+        else:  # stop or any other action
+            send_command("forward_off")
+            send_command("right_off")
+            send_command("left_off")
+            action_text = "stop"
 
         # Add action text to the frame
         cv2.putText(frame, fps_text, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2,
                     cv2.LINE_AA)
-        cv2.putText(highlighted_line, action_text, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+        cv2.putText(highlighted_line, action_text, (0, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
         # Combine the original frame with the highlighted_line
         frame[roi_y:roi_y+roi_height, roi_x:roi_x+roi_width] = highlighted_line

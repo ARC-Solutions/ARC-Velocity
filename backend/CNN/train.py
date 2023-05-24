@@ -40,10 +40,10 @@ def load_images(folder, label_prefix, label, img_size):
 
 
 def load_dataset():
-    forward_folder = r"D:\priv\Programming\ARCV2\backend\CNN\Forward"
-    left_folder = r"D:\priv\Programming\ARCV2\backend\CNN\Left"
-    right_folder = r"D:\priv\Programming\ARCV2\backend\CNN\Right"
-    no_tape_folder = r"D:\priv\Programming\ARCV2\backend\CNN\No_Tape"
+    forward_folder = r"./Forward"
+    left_folder = r"./Left"
+    right_folder = r"./Right"
+    no_tape_folder = r"./No_Tape"
 
     img_size = 224
 
@@ -98,10 +98,10 @@ for layer in base_model.layers:
     layer.trainable = False
 
 # Compile the model
-model.compile(optimizer=Adam(lr=0.001), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer=Adam(learning_rate=0.1), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 # Train the model
-history = model.fit(images, labels, batch_size=32, epochs=20, validation_split=0.2)
+history = model.fit(images, labels, batch_size=32, epochs=50, validation_split=0.2)
 
 # Save the model
-model.save(r"D:\priv\Programming\ARCV2\PreTrainedModel")
+model.save(r"../../../PreTrainedModel")
