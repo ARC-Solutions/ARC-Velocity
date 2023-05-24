@@ -39,6 +39,10 @@ export const Info = () => {
             }
             else if(!hotLap){
                 startHotLap();
+                fetch(`http://localhost:5000/startHotLap`, { method: "POST" })
+                                .then((res) => res.text())
+                                .then((res) => console.log(res))
+                                .catch((err) => console.log(err));
             }
         }
     }
