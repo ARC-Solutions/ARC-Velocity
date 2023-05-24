@@ -1,3 +1,4 @@
 # ARCV2
 First run Main.py, then 'npm start'
-ModelAccuracyValues.ipynb has been moved to [this repository](https://github.com/ARC-Solutions/ARC-VelocityModelVis)
+
+#ModelAccuracyValues.ipynb has been moved to [this repository](https://github.com/ARC-Solutions/ARC-VelocityModelVis)
