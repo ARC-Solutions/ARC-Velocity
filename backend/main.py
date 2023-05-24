@@ -32,11 +32,15 @@ def racing_on():
     print('changing color')
     return Response(json.dumps({'result': 'PetronasColor'}), mimetype='application/json')
 @app.route('/ai', methods=['POST'])
-def ai_on():
+def ai_color():
     arduino.write(b'ineos\n')
-    start_ai_car(arduino)
     print('changing color')
     return Response(json.dumps({'result': 'IneosColor'}), mimetype='application/json')
+@app.route('/startHotLap', methods=['POST'])
+def ai_on():
+    start_ai_car(arduino)
+    print('starting ai script')
+    return Response(json.dumps({'result': 'AiON'}), mimetype='application/json')
 @app.route('/video', methods=['POST'])
 def led_off():
     arduino.write(b'led_off\n')
