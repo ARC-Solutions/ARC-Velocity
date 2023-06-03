@@ -73,7 +73,7 @@ Open your browser and go to http://localhost:3000 to see the web application. �
 Currently, there are no releases or packages published for this project. However, we plan to release the first stable version soon, along with some documentation and tutorials on how to use it. 📚
 
 ## ℹ️ More Information
-For more information about the model accuracy values, please refer to the ModelAccuracyValues.ipynb file in another repository. This file contains some graphs and tables that show how well the model performs on different metrics and datasets. 📊
+For more information about the model accuracy values, please refer to the ModelAccuracyValues.ipynb file in another repository. This file contains some graphs and tables that show how well the model performs on different metrics and datasets. 📊  
 Note: ModelAccuracyValues.ipynb has been moved to [this repository](https://github.com/ARC-Solutions/ARC-VelocityModelVis).
 
 <!-- ## 📞 Contact
