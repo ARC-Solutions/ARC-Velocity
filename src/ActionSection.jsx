@@ -5,7 +5,7 @@ export const ActionSection = () => {
   return (
     <aside id="action-section">
             <div className="video">
-                <iframe id="liveVideo" src="http://192.168.43.202:8080/video"></iframe>
+                <iframe id="liveVideo" src="http://192.168.0.164:8080/video"></iframe>
 
                 <Link to="/landing-Page" className="home" onClick={()=>{
                                 fetch(`http://localhost:5000/home`, { method: "POST" })

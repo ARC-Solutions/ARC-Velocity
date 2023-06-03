@@ -71,8 +71,8 @@ while True:
     roi = frame[roi_y:roi_y+roi_height, roi_x:roi_x+roi_width]
 
     # Define a range for the gray color of the tape
-    lower = np.array([0, 0, 0])
-    upper = np.array([0, 0, 0])  # adjust the V value as needed based on your specific lighting conditions
+    lower = np.array([250, 250, 0])
+    upper = np.array([250, 250, 50])  # adjust the V value as needed based on your specific lighting conditions
 
     # Create a mask to highlight the line
     hsv_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)

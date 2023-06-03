@@ -8,7 +8,7 @@ import {InfoSection} from "./InfoSection"
 import { ActionSection } from "./ActionSection";
 import {Info} from "./Info"
 import {Action} from "./Action"
-import video from "./videos/Hopium.mp4"
+import video from "./videos/ARC_Velocity.mp4"
 import logo from "./pictures/logo.png"
 import {GiExitDoor} from "react-icons/gi"
 export const AppContext = createContext();

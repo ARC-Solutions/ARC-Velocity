@@ -2,10 +2,10 @@ import json
 from flask import Flask, Response, send_from_directory
 from flask_cors import CORS
 from concurrent.futures import ThreadPoolExecutor
-import os
 from racing import forward_on, foward_off, backward_on, backward_off, right_on, right_off, left_on, left_off
 from arduino_Connection import arduino
 from ai import start_ai_car
+import os
 
 REACT_BUILD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../build')
 
@@ -16,8 +16,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 executor = ThreadPoolExecutor(max_workers=os.cpu_count())
-
-
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
@@ -38,7 +36,7 @@ def ai_color():
     return Response(json.dumps({'result': 'IneosColor'}), mimetype='application/json')
 @app.route('/startHotLap', methods=['POST'])
 def ai_on():
-    start_ai_car(arduino)
+    start_ai_car()
     print('starting ai script')
     return Response(json.dumps({'result': 'AiON'}), mimetype='application/json')
 @app.route('/video', methods=['POST'])
@@ -81,7 +79,6 @@ def left():
 @app.route('/left-off', methods=['POST'])
 def left_off_route():
     return executor.submit(left_off).result()
-
 
 
 if __name__ == '__main__':
