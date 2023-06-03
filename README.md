@@ -37,29 +37,30 @@ Open your browser and go to http://localhost:3000 to see the web application. �
 
 ## 🗂️ Directory Structure
 
-├── .idea
-├── Case
-├── ForLandingVideo
-├── backend
-├── mainSetupARD
-├── public
-├── src
-├── .gitignore
-├── ModelAccuracy.png
-├── ModelLoss.png
-├── README.md
-├── output.png
-├── output1.png
-├── package-lock.json
-├── package.json
-└── requirements.txt
+├── .idea  
+├── Case  
+├── ForLandingVideo  
+├── backend  
+├── mainSetupARD  
+├── public  
+├── src  
+├── .gitignore  
+├── ModelAccuracy.png  
+├── ModelLoss.png  
+├── README.md  
+├── output.png  
+├── output1.png  
+├── package-lock.json  
+├── package.json  
+└── requirements.txt  
 
 ## 🛠️ Built With
-Python (49.1%): The main programming language used for developing the backend server and the machine learning model. 🐍 
-JavaScript (29.3%): The main programming language used for developing the frontend application and the user interface using React, a popular library for building user interfaces. 💻 
-CSS (15.1%): The style sheet language used for designing the layout and appearance of the web pages. 🎨 
-C++ (5.7%): The programming language used for optimizing some parts of the machine learning model and integrating it with Python. ⚡ 
-HTML (0.8%): The markup language used for creating the structure and content of the web pages. 📄
+🐍 Python (49.1%): The main programming language used for developing the backend server and the machine learning model.   
+💻 JavaScript (29.3%): The main programming language used for developing the frontend application and the user interface using React, a popular library for building user interfaces.    
+🎨 CSS (15.1%): The style sheet language used for designing the layout and appearance of the web pages.   
+⚡ C++ (5.7%): The programming language used for optimizing some parts of the machine learning model and integrating it with Python.    
+📄 HTML (0.8%): The markup language used for creating the structure and content of the web pages.   
+
 ## 👥 Contributors
 
 ##### Nikola: Responsible for the hardware such as: case, phone stand and the Arduino. 🛠️
