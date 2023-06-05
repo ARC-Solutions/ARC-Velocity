@@ -27,11 +27,11 @@ function App() {
         <div className="logo-container">
                 <img src={logo} id="logo" alt="" />
         </div>
-        <h1>Autonomous RC-Car</h1>
+        <h1>ARC Velocity</h1>
         <div className="navigation">
           <div className="watch-video">
             <FiPlay/>
-            <h6>watch video</h6>
+           <a href="https://vimeo.com/831790355?share=copy" target="_blank"><h6 id="watch">watch video</h6></a>
           </div>
           <TbMinusVertical style={{transform: "scale(2)"}}/>
           <Link to={"/landing-Page"} className="navigate-home">

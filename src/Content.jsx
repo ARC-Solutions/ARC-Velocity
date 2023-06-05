@@ -40,7 +40,7 @@ export const Content = () => {
             <div id="lineTwo"></div>
         </aside>
         <main id="text-content" style={{margin: `${calcTextContentMargin() -25}px 0 0 0`}}>
-            <h1>Autonomous RC-Car</h1>
+            <h1>ARC Velocity</h1>
                     <p>The place where an idea meets three enthusiastic programmers,
                         with a passion for Formula 1 and a simple philosophy 
                         “We’ll succeed when everyone delivers their tenth of a second”.
