@@ -1,12 +1,13 @@
 import os
 import cv2
 
-source_folder = "D:\priv\Programming\ARCV2\Training"
+source_folder = "../../Training"
 output_folders = {
-    "w": r"D:\priv\Programming\ARCV2\backend\CNN\Forward",
-    "a": r"D:\priv\Programming\ARCV2\backend\CNN\Left",
-    "d": r"D:\priv\Programming\ARCV2\backend\CNN\Right",
-    "s": r"D:\priv\Programming\ARCV2\backend\CNN\No_Tape",
+    "w": "./Forward",
+    "a": "./Left",
+    "d": "./Right",
+    "s": "./No_Tape",
+    "0": "./no_class"
 }
 preview_max_width = 880
 preview_max_height = 660
@@ -20,7 +21,7 @@ def display_image(image):
 def wait_for_label():
     while True:
         key = cv2.waitKey(0) & 0xFF
-        if key in [ord('w'), ord('a'), ord('d'), ord('s'), ord('q')]:
+        if key in [ord('w'), ord('a'), ord('d'), ord('s'), ord('q'), ord('0')]:
             return chr(key)
 
 def resize_image(image, max_width, max_height):
@@ -41,7 +42,7 @@ def add_text(image):
     font_scale = 0.7
     font_color = (255, 255, 255)
     font_thickness = 2
-    text = "w: for forward\na: for left\nd: for right\ns: for no tape\nq: to quit"
+    text = "w: for forward\na: for left\nd: for right\ns: for no tape\n0: for no_classification \nq: to quit"
     y0, dy = 30, 30
     for i, line in enumerate(text.split('\n')):
         y = y0 + i * dy

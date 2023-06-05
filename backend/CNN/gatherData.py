@@ -3,12 +3,19 @@ from selenium import webdriver
 import time
 import requests
 import os
+import sys
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+from backend.videoConnection import training_url
 
 # Set the URL to fetch
-url = "http://192.168.0.164:8080/videomgr.html#/photo"
+url = training_url
 
 # Set the directory to save the images to
-directory = r"D:\priv\Programming\ARCV2\Training"
+directory = r"../../Training"
 
 # Create a new instance of the Chrome driver
 driver = webdriver.Chrome()

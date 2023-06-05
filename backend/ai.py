@@ -5,137 +5,145 @@ import time
 from keras.models import load_model
 import threading
 import queue
+import os
+import sys
+import requests
+from PIL import Image
+from io import BytesIO
+import concurrent.futures
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+from backend.videoConnection import frame_url
 
 def send_command(command, impulse_duration=0.1):
     ser.write(f"{command}\n".encode())
     time.sleep(impulse_duration)
     ser.write(f"{command}_off\n".encode())
 
+def fetch_latest_frame(url):
+    try:
+        response = requests.get(url)
+        img = Image.open(BytesIO(response.content))
+        return cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+    except Exception as e:
+        print(f"Error fetching latest frame: {e}")
+        return None
+
 def preprocess_image(img, img_size=224):
     img_resized = cv2.resize(img, (img_size, img_size))
     img_normalized = img_resized.astype('float32') / 255.0
     return img_normalized
 
-
-def capture_frames(cap, frame_queue, stop_capture):
-    while not stop_capture.is_set():
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        if frame_queue.full():
-            frame_queue.get()
-
-        frame_queue.put((ret, frame))
-
-
 def start_ai_car(arduino_serial):
-    video_url = "http://192.168.0.164:8080/video"
-    cap = cv2.VideoCapture(video_url)
-
-    model_path = "D:\priv\Programming\ARCV2\PreTrainedModel"
+    model_path = "../PreTrainedModel"
     model = load_model(model_path)
 
     impulse_duration = 0.05  # Adjust this value to control the duration of the impulses
     prev_frame_time = time.time()
 
-    # Create a queue to store frames and an event to signal when to stop capturing frames
-    frame_queue = queue.Queue(maxsize=1)
-    stop_capture = threading.Event()
+    # Create a ThreadPoolExecutor
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
 
-    # Initialize the frame_queue and start the capture thread
-    frame_queue = queue.Queue()
-    capture_thread = threading.Thread(target=capture_frames, args=(cap, frame_queue, stop_capture))
-    capture_thread.start()
+    # Create a queue to hold the Futures returned by the executor
+    futures = queue.Queue()
 
     while True:
-        if frame_queue.empty():
-            continue
+        # Fetch the latest frame
+        frame_future = executor.submit(fetch_latest_frame, frame_url)
+        futures.put(frame_future)
 
-        ret, frame = frame_queue.get()
-        if not ret:
-            break
+        # Get the result of the earliest submitted task, if it's done
+        while not futures.empty():
+            future = futures.queue[0]  # Peek at the first item
+            if future.done():
+                future = futures.get()  # Remove the first item
+                frame = future.result()
+                if frame is None:
+                    continue
 
-        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+                # Calculate FPS
+                new_frame_time = time.time()
+                fps = 1 / (new_frame_time - prev_frame_time)
+                prev_frame_time = new_frame_time
+                fps_text = f"FPS: {fps:.2f}"
 
-        new_width = 96
-        new_height = 128
-        cap.set(cv2.CAP_PROP_FRAME_WIDTH, new_width)
-        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, new_height)
+                # Define a region of interest
+                height, width, _ = frame.shape
+                roi_height = 100  # Adjust this to change the ROI height
+                roi_width = 230  # Adjust this to change the ROI width
+                roi_y = int(height * 0.6)+25
+                roi_x = int((width - roi_width) / 2)
+                roi = frame[roi_y:roi_y+roi_height, roi_x:roi_x+roi_width]
 
-        # Calculate FPS
-        new_frame_time = time.time()
-        fps = 1 / (new_frame_time - prev_frame_time)
-        prev_frame_time = new_frame_time
-        fps_text = f"FPS: {fps:.2f}"
+                # Define a range for the gray color of the tape
+                lower =np.array([0, 0, 0])
+                upper = np.array([160, 160, 140])  # adjust the V value as needed based on your specific lighting conditions
 
-        # Define a region of interest
-        height, width, _ = frame.shape
-        roi_height = 100 # Adjust this to change the ROI height
-        roi_width = 300  # Adjust this to change the ROI width
-        roi_y = int(height * 0.6)+25
-        roi_x = int((width - roi_width) / 2)
-        roi = frame[roi_y:roi_y+roi_height, roi_x:roi_x+roi_width]
+                # Create a mask to highlight the line
+                hsv_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
+                mask = cv2.inRange(hsv_roi, lower, upper)
+                highlighted_line = cv2.bitwise_and(roi, roi, mask=mask)
 
-        # Define a range for the gray color of the tape
-        lower = np.array([0, 0, 0])
-        upper = np.array([160, 160, 140])  # adjust the V value as needed based on your specific lighting conditions
+                # Check the percentage of white pixels in the ROI
+                white_pixel_percentage = (np.sum(mask > 0) / (roi_height * roi_width)) * 100
+                white_pixel_threshold = 5  # Adjust this threshold to your preference
 
-        # Create a mask to highlight the line
-        hsv_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
-        mask = cv2.inRange(hsv_roi, lower, upper)
-        highlighted_line = cv2.bitwise_and(roi, roi, mask=mask)
+                # Preprocess the ROI for the model
+                preprocessed_roi = preprocess_image(roi)
+                preprocessed_roi = np.expand_dims(preprocessed_roi, axis=0)
 
-        # Check the percentage of white pixels in the ROI
-        white_pixel_percentage = (np.sum(mask > 0) / (roi_height * roi_width)) * 100
-        white_pixel_threshold = 5  # Adjust this threshold to your preference
+                # Use the model's prediction to decide the direction to move
+                prediction_future = executor.submit(model.predict, preprocessed_roi)
+                futures.put(prediction_future)
 
-        # Preprocess the ROI for the model
-        preprocessed_roi = preprocess_image(roi)
-        preprocessed_roi = np.expand_dims(preprocessed_roi, axis=0)
+                while not futures.empty():
+                    future = futures.queue[0]  # Peek at the first item
+                    if future.done():
+                        future = futures.get()  # Remove the first item
+                        prediction = future.result()
+                        predicted_label = np.argmax(prediction)
+                        print(predicted_label)
+                        action_text = ""
+                        if white_pixel_percentage < white_pixel_threshold:
+                            if predicted_label == 0:  # forward
+                                send_command("forward_on", impulse_duration)
+                                print("forward_on")
+                                action_text = "forward"
+                            elif predicted_label == 1:  # left
+                                send_command("left_on", impulse_duration)
+                                action_text = "left"
+                                print("left_on")
+                            elif predicted_label == 2:  # right
+                                send_command("right_on", impulse_duration)
+                                action_text = "right"
+                                print("right_on")
+                            elif predicted_label == 3:
+                                action_text = "no_tape"
+                                print("no_tape")
+                        else:  # stop or any other action
+                            send_command("forward_off")
+                            send_command("right_off")
+                            send_command("left_off")
+                            action_text = "stop"
 
-        # Use the model's prediction to decide the direction to move
-        prediction = model.predict(preprocessed_roi)
-        predicted_label = np.argmax(prediction)
-        print(predicted_label)
-        action_text = ""
-        if white_pixel_percentage < white_pixel_threshold:
-            if predicted_label == 0:  # forward
-                send_command("forward_on", impulse_duration)
-                print("forward_on")
-                action_text = "forward"
-            elif predicted_label == 1:  # left
-                send_command("left_on", impulse_duration)
-                action_text = "left"
-                print("left_on")
-            elif predicted_label == 2:  # right
-                send_command("right_on", impulse_duration)
-                action_text = "right"
-                print("right_on")
-            elif predicted_label == 3:
-                action_text = "no_tape"
-                print("no_tape")
-        else:  # stop or any other action
-            send_command("forward_off")
-            send_command("right_off")
-            send_command("left_off")
-            action_text = "stop"
+                        # Add action text to the frame
+                        cv2.putText(frame, fps_text, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2,
+                                    cv2.LINE_AA)
+                        cv2.putText(highlighted_line, action_text, (0, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
-        # Add action text to the frame
-        cv2.putText(frame, fps_text, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2,
-                    cv2.LINE_AA)
-        cv2.putText(highlighted_line, action_text, (0, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+                        # Combine the original frame with the highlighted_line
+                        frame[roi_y:roi_y+roi_height, roi_x:roi_x+roi_width] = highlighted_line
+                        cv2.imshow("processed_frame", frame)
 
-        # Combine the original frame with the highlighted_line
-        frame[roi_y:roi_y+roi_height, roi_x:roi_x+roi_width] = highlighted_line
-        cv2.imshow("processed_frame", frame)
+                        # Break the loop when the 'q' key is pressed
+                        if cv2.waitKey(1) & 0xFF == ord('q'):
+                            break
+                    else:
+                        break  # No more completed tasks
 
-        # Break the loop when the 'q' key is pressed
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            stop_capture.set()
-            break
-
-    capture_thread.join()
-    cap.release()
     cv2.destroyAllWindows()
+
+start_ai_car(ser)

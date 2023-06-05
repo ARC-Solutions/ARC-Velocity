@@ -104,4 +104,4 @@ model.compile(optimizer=Adam(learning_rate=0.1), loss='sparse_categorical_crosse
 history = model.fit(images, labels, batch_size=32, epochs=50, validation_split=0.2)
 
 # Save the model
-model.save(r"../../../PreTrainedModel")
+model.save(r"../../PreTrainedModel")
