@@ -76,7 +76,8 @@ function App() {
       </section>
       }/>
       <Route path="*" element={
-        <h1>Mark ist poop
+        <h1>
+          404
         </h1>
       }/>
 
