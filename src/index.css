@@ -118,10 +118,13 @@ body {
 .watch-video a{
   color: inherit;
   text-decoration: none;
-  pointer-events: none;
 }
 .watch-video:hover{
   text-decoration: none;
+  color: var(--primary-color) !important;
+}
+
+.watch-video a:hover{
   color: var(--primary-color) !important;
 }
 .navigation h6{
